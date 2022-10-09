@@ -6,7 +6,7 @@ import { pokeApi } from '../../api';
 import { Layout } from '../../components/layouts'
 import { Pokemon } from '../../interfaces';
 import { localFavorites } from '../../utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   pokemon: Pokemon;
@@ -14,7 +14,14 @@ interface Props {
 
 const PokemonPage:NextPage<Props> = ({pokemon}) => {
 
-  const [isInFavorites, setIsInFavorites] = useState(localFavorites.existInFavorites(pokemon.id));
+  // const [isInFavorites, setIsInFavorites] = useState(localFavorites.existInFavorites(pokemon.id));
+  const [isInFavorites, setIsInFavorites] = useState(false);
+
+  useEffect(() => {
+    setIsInFavorites(localFavorites.existInFavorites(pokemon.id))
+  }, [])
+
+
 
   const onToggleFavorite = () => {
     localFavorites.toggleFavorite(pokemon.id);
